@@ -17,7 +17,7 @@ def generate_buzz():
 
 @app.route("/mongo")
 def generate_buzz_mongo():
-    collection = MongoClient()['buzz']['generator']
+    collection = MongoClient('mongodb://127.0.0.1:27017/')['buzz']['generator']
     page = '<html><body><h1>'
     page += generator.generate_buzz_mongo(collection)
     page += '</h1><footer><p>Powered by MongoDB</p></footer></body></html>'
