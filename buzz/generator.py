@@ -1,4 +1,5 @@
 import random
+from pymongo import MongoClient
 
 buzz = ('continuous testing', 'continuous integration',
     'continuous deployment', 'continuous improvement', 'devops')
@@ -19,5 +20,16 @@ def generate_buzz():
         sample(verbs), buzz_terms[1]])
     return phrase.title()
 
+def generate_buzz_mongo(collection):
+   
+    adjective = sample(collection.find_one()["adjectives"])
+    adverb = sample(collection.find_one()["adverbs"])
+    verb = sample(collection.find_one()["verbs"])
+    buzz_terms = sample(collection.find_one()["buzz"], 2)
+    
+    phrase = ' '.join([adjective, buzz_terms[0], adverb, verb, buzz_terms[1]])
+
+    return phrase.title()
+
 if __name__ == "__main__":
-    print(generate_buzz())
+    print(generate_buzz_mongo(MongoClient()['buzz']['generator']))
