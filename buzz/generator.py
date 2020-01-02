@@ -21,14 +21,15 @@ def generate_buzz():
     return phrase.title()
 
 def generate_buzz_mongo(collection):
-   
-    adjective = sample(collection.find_one()["adjectives"])
-    adverb = sample(collection.find_one()["adverbs"])
-    verb = sample(collection.find_one()["verbs"])
+    adjective  = sample(collection.find_one()["adjectives"])
+    adverb     = sample(collection.find_one()["adverbs"])
+    verb       = sample(collection.find_one()["verbs"])
     buzz_terms = sample(collection.find_one()["buzz"], 2)
-    
-    phrase = ' '.join([adjective, buzz_terms[0], adverb, verb, buzz_terms[1]])
-
+    phrase     = ' '.join([ adjective,
+                            buzz_terms[0],
+                            adverb,
+                            verb,
+                            buzz_terms[1]])
     return phrase.title()
 
 if __name__ == "__main__":
