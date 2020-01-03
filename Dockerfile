@@ -1,16 +1,9 @@
-FROM mongo
-
-RUN apt-get update && \
-    apt-get upgrade && \
-    apt-get install --no-install-recommends -y python3 python3-pip
+FROM python:3-alpine
 
 COPY requirements.txt /src/requirements.txt
 
 RUN pip3 install -r /src/requirements.txt
 
-COPY data/data.json /src
-COPY app.py /src
-COPY buzz /src/buzz
-COPY run.sh /src
+COPY webapp /opt/webapp/
 
-CMD [ "/src/run.sh" ]
+CMD [ "python", "/opt/webapp/app.py" ]

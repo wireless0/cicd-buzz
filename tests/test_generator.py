@@ -1,7 +1,6 @@
 import unittest
 
-from buzz import generator
-from pymongo import MongoClient
+from webapp.buzz import generator
 
 def test_sample_single_word():
     l = ('foo', 'bar', 'foobar')

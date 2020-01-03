@@ -1,11 +1,11 @@
 import random
-from pymongo import MongoClient
+import pickle
 
 buzz = ('continuous testing', 'continuous integration',
-    'continuous deployment', 'continuous improvement', 'devops')
+        'continuous deployment', 'continuous improvement', 'devops')
 adjectives = ('complete', 'modern', 'self-service', 'integrated', 'end-to-end')
 adverbs = ('remarkably', 'enormously', 'substantially', 'significantly',
-    'seriously')
+            'seriously')
 verbs = ('accelerates', 'improves', 'enhances', 'revamps', 'boosts')
 
 def sample(l, n = 1):
@@ -20,11 +20,11 @@ def generate_buzz():
         sample(verbs), buzz_terms[1]])
     return phrase.title()
 
-def generate_buzz_mongo(collection):
-    adjective  = sample(collection.find_one()["adjectives"])
-    adverb     = sample(collection.find_one()["adverbs"])
-    verb       = sample(collection.find_one()["verbs"])
-    buzz_terms = sample(collection.find_one()["buzz"], 2)
+def generate_buzz_redis(r):
+    adjective  = sample(pickle.loads(r.get('adjectives')))
+    adverb     = sample(pickle.loads(r.get('adverbs')))
+    verb       = sample(pickle.loads(r.get('verbs')))
+    buzz_terms = sample(pickle.loads(r.get('buzz')), 2)
     phrase     = ' '.join([ adjective,
                             buzz_terms[0],
                             adverb,
@@ -33,4 +33,4 @@ def generate_buzz_mongo(collection):
     return phrase.title()
 
 if __name__ == "__main__":
-    print(generate_buzz_mongo(MongoClient()['buzz']['generator']))
+    print(generate_buzz())
